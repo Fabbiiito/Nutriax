@@ -3,50 +3,22 @@ package desarollodeplataformasii.nutriaxDBP
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import desarollodeplataformasii.nutriaxDBP.ui.theme.NutriaxDBPTheme
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.Text
 import androidx.constraintlayout.compose.ConstraintLayout
 
-import androidx.constraintlayout.compose.ConstrainedLayoutReference
-import androidx.constraintlayout.compose.ConstraintLayoutBaseScope
 import androidx.constraintlayout.compose.Dimension
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.layout.ContentScale
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
-
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-
-import androidx.compose.material3.Button
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.material3.Surface
 
 
 class InicioActivity : ComponentActivity() {
@@ -57,7 +29,9 @@ class InicioActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = Color.Black // el fondo de toda la pantalla
             ) {
-                inicio() // tu función con todo el contenido
+                //inicio() // tu función con todo el contenido
+                //
+                //RegisterFlow()
             }
         }
     }
@@ -90,6 +64,8 @@ fun GreetingPreview() {
 }
 
  */
+//todo esto es la parte de incio oi waaaa
+/*
 @Preview
 @Composable
 fun inicio (modifier: Modifier = Modifier) {
@@ -245,20 +221,230 @@ fun login() {
     }
 
 }
-
+*/
+//todo es para el la aprte d enew user pero con varia paginas waaaa
 /*
-fun Ejemplo2ConstraintGuide(){
-    ConstraintLayout (modifier = Modifier.fillMaxSize()){
+@Composable
 
-        val cajaRoja : ConstrainedLayoutReference = createRef()
-        val topGuide : ConstraintLayoutBaseScope.HorizontalAnchor = createGuidelineFromTop( 0.1f)
-        val startGuide : ConstraintLayoutBaseScope.VerticalAnchor = createGuidelineFromStart( 0.25f)
-        Box(modifier = Modifier.size(125.dp).background(Color.Red).constrainAs(cajaRoja){
-            top.linkTo(topGuide)
-            start.linkTo(startGuide)
-        })
+fun BaseLayout(
+    top: (@Composable () -> Unit)? = null,
+    content: @Composable () -> Unit,
+    bottom: (@Composable () -> Unit)? = null
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp)
+    ) {
+
+        if (top != null) {
+            Box(modifier = Modifier.padding(top = 24.dp)) {
+                top()
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            content()
+        }
+
+        if (bottom != null) {
+            Box(modifier = Modifier.padding(bottom = 24.dp)) {
+                bottom()
+            }
+        }
     }
 }
 
+/* =========================
+   FLOW
+   ========================= */
 
- */
+@Composable
+fun RegisterFlow() {
+    var step by rememberSaveable { mutableStateOf(0) }
+
+    when (step) {
+
+        0 -> BaseLayout(
+            top = { Title("Bienvenido") },
+            content = { PageOne() },
+            bottom = { NextButton { step = 1 } }
+        )
+
+        1 -> BaseLayout(
+            top = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BackButton { step-- }
+                    Spacer(Modifier.width(8.dp))
+                    Title("Cuéntanos de ti")
+                }
+            },
+            content = {
+                PageTwo(
+                    onSelectGoal = { step = 2 }
+                )
+            }
+        )
+
+        2 -> BaseLayout(
+            top = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BackButton { step-- }
+                    Spacer(Modifier.width(8.dp))
+                    Title("Final")
+                }
+            },
+            content = { PageThree() }
+        )
+    }
+}
+
+/* =========================
+   PAGES
+   ========================= */
+
+@Composable
+fun PageOne() {
+    Text(
+        text = "¿Cuál es tu edad?",
+        color = Color.White,
+        fontSize = 22.sp,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+@Composable
+fun PageTwo(
+    onSelectGoal: () -> Unit
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Text("Selecciona tu objetivo", color = Color.White)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = onSelectGoal) {
+            Text("Bajar grasa")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(onClick = onSelectGoal) {
+            Text("Ganar músculo")
+        }
+    }
+}
+
+@Composable
+fun PageThree() {
+    Text(
+        text = "Registro completo 🎉",
+        color = Color.White,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+/* =========================
+   COMPONENTS
+   ========================= */
+
+@Composable
+fun NextButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFFF9800)
+        )
+    ) {
+        Text("Continuar", color = Color.Black)
+    }
+}
+
+@Composable
+fun BackButton(onClick: () -> Unit) {
+    Text(
+        text = "←",
+        color = Color.White,
+        fontSize = 24.sp,
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(8.dp)
+    )
+}
+
+@Composable
+fun Title(text: String) {
+    Text(
+        text = text,
+        color = Color.White,
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+/* =========================
+   PREVIEW
+   ========================= */
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterPreview() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.Black
+    ) {
+        RegisterFlow()
+    }
+}
+*/
+
+
+@Preview(showBackground = true)
+@Composable
+fun SkeletonConstraintLayout2() {
+
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .padding(vertical = 40.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.1f), // altura del row en f
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+
+            // CAJA 1
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth(0.15f)
+                    .background(Color.White)
+                    .clickable { }
+            )
+
+            // CAJA 2
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth()
+                    .background(Color.Red)
+            )
+        }
+    }
+
+}
+
+
+
