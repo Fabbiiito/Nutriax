@@ -19,6 +19,11 @@ import androidx.compose.material3.Text
 import androidx.constraintlayout.compose.ConstraintLayout
 
 import androidx.constraintlayout.compose.Dimension
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+
 
 
 class InicioActivity : ComponentActivity() {
@@ -416,7 +421,9 @@ fun SkeletonConstraintLayout2() {
             .fillMaxSize()
             .background(Color.Black)
             .padding(vertical = 40.dp)
+
     ) {
+        //val startGuide = createGuidelineFromStart(0.5f)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -442,9 +449,91 @@ fun SkeletonConstraintLayout2() {
                     .background(Color.Red)
             )
         }
+
+        val imagenlogo = createRef()
+        val topimagen = createGuidelineFromTop(0.1f)
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .constrainAs(imagenlogo) {
+                    top.linkTo(topimagen)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width = Dimension.percent(0.5f)
+                    height = Dimension.percent(0.15f)
+                }
+        )
+        val textimagen = createRef()
+        val toptextimagen = createGuidelineFromTop(0.27f)
+        val startGuide = createGuidelineFromStart(0.15f)
+        val endGuide = createGuidelineFromEnd(0.15f)
+
+        Box(
+            modifier = Modifier
+                .background(Color. White)
+                .constrainAs(textimagen) {
+                    top.linkTo(toptextimagen)
+                    start.linkTo(startGuide)
+                    end.linkTo(endGuide)
+
+                    height = Dimension.value(60.dp)
+                    width = Dimension.fillToConstraints
+                }
+        )
+
+        val descripcion = createRef()
+        val topdescripcion = createGuidelineFromTop(0.37f)
+        Box(
+            modifier = Modifier
+                .background(Color.Red)
+                .constrainAs(descripcion) {
+                    top.linkTo(topdescripcion)
+                    start.linkTo(startGuide)
+                    end.linkTo(endGuide)
+
+                    height = Dimension.value(90.dp)
+                    width = Dimension.fillToConstraints
+                }
+        )
+        val cajaboton = createRef()
+        val topbotones = createGuidelineFromTop(0.5f)
+        val statboton =createGuidelineFromStart(0.05f)
+        val endboton =createGuidelineFromEnd(0.05f)
+        val bottonboton =createGuidelineFromBottom(0.15f)
+        Box(
+            modifier = Modifier
+                .background(Color.Red)
+                .constrainAs(cajaboton) {
+                    top.linkTo(topbotones)
+                    bottom.linkTo(bottonboton)
+                    start.linkTo(statboton)
+                    end.linkTo(endboton)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+        )
+        val continuar =createRef()
+        val topcontinuar = createGuidelineFromTop(0.9f)
+        val Bottoncontinuar = createGuidelineFromBottom(0f)
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .constrainAs(continuar) {
+                    top.linkTo(topcontinuar)
+                    bottom.linkTo(Bottoncontinuar)
+                    start.linkTo(statboton)
+                    end.linkTo(endboton)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+        )
+
+
     }
 
 }
+
 
 
 
