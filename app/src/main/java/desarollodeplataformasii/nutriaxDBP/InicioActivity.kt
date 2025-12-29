@@ -23,7 +23,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Text
 
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 class InicioActivity : ComponentActivity() {
@@ -411,7 +420,7 @@ fun RegisterPreview() {
 }
 */
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun SkeletonConstraintLayout2() {
@@ -515,7 +524,7 @@ fun SkeletonConstraintLayout2() {
         )
         val continuar =createRef()
         val topcontinuar = createGuidelineFromTop(0.9f)
-        val Bottoncontinuar = createGuidelineFromBottom(0f)
+        val Bottoncontinuar = createGuidelineFromBottom(0)
         Box(
             modifier = Modifier
                 .background(Color.White)
@@ -533,7 +542,40 @@ fun SkeletonConstraintLayout2() {
     }
 
 }
+*/
 
+@Preview(showBackground = true)
+@Composable
+fun Carga() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            // El Logo (Icono de las líneas)
+            Image(
+                painter = painterResource(id = R.drawable.nutriax_logo),
+                contentDescription = "Logo Nutriax",
+                modifier = Modifier.size(100.dp),
+                contentScale = ContentScale.Fit
+            )
 
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Text(
+                text = "Nutriax",
+                color = Color.White,
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Normal,
+                letterSpacing = 1.sp
+            )
+        }
+    }
+}
 
 
